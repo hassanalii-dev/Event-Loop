@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Event loop:</h1>
+    <p>We would like to end this chapter by explaining how JavaScript handles asynchrony
+and concurrency under the hood. JavaScript is a single-threaded language. A thread
+in this context means a path of execution. If there is only a single path, this means that
+tasks will have to wait for one another and only one thing can happen at a time.</p>
+<p>This single executor is the <strong>event loop.</strong> It's a process that executes the actual work.
+You may wonder about this, because you've just learned about concurrency and
+doing things asynchronously and at the same time. Well, even though JavaScript
+is single-threaded, it doesn't mean that it cannot outsource some tasks and wait
+for them to come back. This is exactly how JavaScript manages to do things in a
+multithreaded manner</p>
+<h2>Call Stack And Callback Queue:</h2>
+<p>JavaScripts works with a <strong>call stack,</strong> and all the actions that it has to execute are
+queued up here. The event loop is a process that is constantly monitoring this call
+stack, and whenever there are tasks to do, the event loop does them one by one. The
+tasks on top get executed first.</p>
+<p>The setTimeout() task gets outsourced to the browser's web API (more on APIs in
+Chapter 15, Next Steps). When it's done, this appears in a special place: the <strong>callback
+queue.</strong> When the call stack is empty (and only then!), the event loop will check the
+callback queue for work to do. If there are any callbacks waiting, they'll be executed,
+one by one. After every action, the event loop will check the call stack for work first</p>
+<p>When setTimeout() expires, the event loop will have done whatever was on the <strong>call stack</strong> already, and will check the callback queue and execute any tasks on there:</p>
+<p>This will output the exact same thing. setTimeout() will also be outsourced when
+the timer is at 0. The callback is placed in the callback queue right away, but the
+event loop won't even check the callback queue until the callstack is empty. So it will
+still print Sorry I'm late after 9, even though the timer is at 0</p>
+<h2>Chapter Project:</h2>
+<h2>Password Checker:</h2>
+<p>Using an array of allowed passwords, this exercise will create an application to check
+if one of these password string values exists in an array that lists all the accepted
+passwords. Set a Promise to check if the password is valid, and upon the result either
+resolve with the status of true or reject with the status of false. Return the check
+results</p>
+<ol>
+    <li>Create an array of allowed passwords.</li>
+    <li>Create a login function that will check if the argument is a value that is
+included in the passwords array. You can use indexof() or the includes()
+method to check the array for a value and return a Boolean value of the
+result.
+</li>
+<li>Add a function that returns a Promise. Using resolve and reject, return a
+JavaScript object with the Boolean of true or false to indicate the password
+validity status.</li>
+<li>Create a function that checks the password, sending it to the login function,
+and using then() and catch(), outputs the result of either the rejected
+password or the resolved password.</li>
+<li>Send several passwords, some within the array, others not, to the checker
+function.</li>
+</ol>
+<script src="index.js"></script>
+</body>
+</html>
